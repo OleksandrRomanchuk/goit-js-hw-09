@@ -1,26 +1,26 @@
-const refs = {
-  launchBtn: document.querySelector('[data-start]'),
-  stopBtn: document.querySelector('[data-stop]'),
-  documentBody: document.body,
-};
+import { refs } from './refs';
+
+const {
+  task01: { launchBtn, stopBtn, documentBody },
+} = refs;
 
 let timerId = null;
 
-toggleBtnAvailability(refs.launchBtn, refs.stopBtn);
+toggleBtnAvailability(launchBtn, stopBtn);
 
-refs.launchBtn.addEventListener('click', startChangeBackgroundColor);
-refs.stopBtn.addEventListener('click', stopChangeBackgroundColor);
+launchBtn.addEventListener('click', startChangeBackgroundColor);
+stopBtn.addEventListener('click', stopChangeBackgroundColor);
 
 function startChangeBackgroundColor() {
-  toggleBtnAvailability(refs.stopBtn, refs.launchBtn);
-  setBodyBackgroundColor(refs.documentBody);
+  toggleBtnAvailability(stopBtn, launchBtn);
+  setBodyBackgroundColor(documentBody);
 
-  timerId = setInterval(setBodyBackgroundColor, 1000, refs.documentBody);
+  timerId = setInterval(setBodyBackgroundColor, 1000, documentBody);
 }
 
 function stopChangeBackgroundColor() {
   clearInterval(timerId);
-  toggleBtnAvailability(refs.launchBtn, refs.stopBtn);
+  toggleBtnAvailability(launchBtn, stopBtn);
 }
 
 function toggleBtnAvailability(enabledBtn, disabledBtn) {
