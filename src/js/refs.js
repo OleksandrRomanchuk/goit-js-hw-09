@@ -9,7 +9,7 @@ const refs = {
     startBtn: document.querySelector('button[data-start]'),
     outptuElements: document.querySelectorAll('.value'),
   },
-  task03: {},
+  task03: { form: document.querySelector('.form') },
 };
 
 export { refs };
