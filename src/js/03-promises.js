@@ -24,13 +24,13 @@ function onFormSubmit(event) {
 }
 
 function createDataObj(formEl) {
-  return [...formEl].reduce((dataObj, { name }) => {
+  return ({ delay, step, amount } = [...formEl].reduce((dataObj, { name }) => {
     if (name) {
       dataObj[name] = Number(formEl.elements[name].value);
     }
 
-    return ({ delay, step, amount } = dataObj);
-  }, {});
+    return dataObj;
+  }, {}));
 }
 
 function ifPromiseResolve({ position, delay }) {
