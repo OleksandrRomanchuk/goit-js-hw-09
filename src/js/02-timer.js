@@ -2,15 +2,13 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { refs } from './refs';
+import { phrases } from './phrases-obj';
 
-const {
-  task02: { datetimeEl, startBtn, outptuElements },
-} = refs;
 let selectedDate = null;
 let timerId = null;
-
-// disabledEl(startBtn);
-
+const {
+  task02: { timerEl, datetimeEl, startBtn, outptuElements },
+} = refs;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -24,12 +22,18 @@ const options = {
   },
 };
 
+disabledEl(startBtn);
 flatpickr(datetimeEl, options);
+
+timerEl.insertAdjacentHTML('afterbegin', createPhraseContainer());
+const phraseContainer = document.querySelector('.phrase-container');
+startBtn.addEventListener('click', showPhrase);
 
 function launchTimer() {
   disabledEl(startBtn);
   disabledEl(datetimeEl);
   updatTimeboard(selectedDate, outptuElements);
+  // showPhrase(phrases, phraseContainer);
 
   Notify.success('Congratulations! You have successfully started the timer!');
 
@@ -87,4 +91,33 @@ function disabledEl(element) {
 
 function enabledEl(element) {
   element.removeAttribute('disabled', 'disabled');
+}
+
+function createPhraseContainer() {
+  return `<div class="phrase-container">
+  <p class="phrase__text"></p>
+  <p class="phrase__author"></p>
+</div>`;
+}
+
+function showPhrase() {
+  phraseContainer.classList.add('phrase-container--animated');
+
+  let counter = 1;
+
+  insertPhraseText(0, phrases, phraseContainer);
+
+  setInterval(() => {
+    insertPhraseText(counter, phrases, phraseContainer);
+    counter === phrases.length - 1 ? (counter = 0) : (counter += 1);
+  }, 8500);
+}
+
+function insertPhraseText(index, array, outputEl) {
+  [...outputEl.children].forEach(el => {
+    if (el.classList.value === 'phrase__text')
+      el.textContent = `${array[index].phrase}`;
+    if (el.classList.value === 'phrase__author')
+      el.textContent = `${array[index].author}`;
+  });
 }

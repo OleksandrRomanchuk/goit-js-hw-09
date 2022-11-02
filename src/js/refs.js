@@ -8,6 +8,7 @@ const refs = {
     datetimeEl: document.querySelector('input[id="datetime-picker"]'),
     startBtn: document.querySelector('button[data-start]'),
     outptuElements: document.querySelectorAll('.value'),
+    timerEl: document.querySelector('.timer'),
   },
   task03: { form: document.querySelector('.form') },
 };
